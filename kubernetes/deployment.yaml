@@ -6,7 +6,7 @@ metadata:
   labels:
     app: ecommerce-lc-27-11-2026
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: ecommerce-lc-27-11-2026
