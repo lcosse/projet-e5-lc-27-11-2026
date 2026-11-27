@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecommerce-deployment-lc-27-11-2026
+  namespace: e5-lc-27-11-2026
+  labels:
+    app: ecommerce-lc-27-11-2026
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ecommerce-lc-27-11-2026
+  template:
+    metadata:
+      labels:
+        app: ecommerce-lc-27-11-2026
+    spec:
+      containers:
+        - name: ecommerce-app
+          image: ecommerce-lc-27-11-2026:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5005
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: ecommerce-configmap-lc-27-11-2026
+            - secretRef:
+                name: stripe-secret-lc-27-11-2026
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5005
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5005
+            initialDelaySeconds: 10
+            periodSeconds: 15
