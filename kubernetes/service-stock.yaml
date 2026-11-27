@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: stock-service-lc-27-11-2026
+  namespace: e5-lc-27-11-2026
+  labels:
+    app: stock-lc-27-11-2026
+spec:
+  type: ClusterIP
+  selector:
+    app: stock-lc-27-11-2026
+  ports:
+    - port: 5006
+      targetPort: 5006
+      protocol: TCP

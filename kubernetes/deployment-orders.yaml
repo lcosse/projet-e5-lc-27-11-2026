@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-deployment-lc-27-11-2026
+  namespace: e5-lc-27-11-2026
+  labels:
+    app: orders-lc-27-11-2026
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: orders-lc-27-11-2026
+  template:
+    metadata:
+      labels:
+        app: orders-lc-27-11-2026
+    spec:
+      containers:
+        - name: orders-app
+          image: orders-lc-27-11-2026:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5007
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5007
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5007
+            initialDelaySeconds: 10
+            periodSeconds: 15
